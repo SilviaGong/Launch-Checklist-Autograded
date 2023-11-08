@@ -36,24 +36,30 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     const launchStatus = document.getElementById("launchStatus");
 
     pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
-    copilotStatus.innerHTML = `Copilot ${copilot} is ready for launch`;
-    if (validateInput(fuelLevel) === "Is a Number" && validateInput(cargoLevel) === "Is a Number") {
-        if (fuelLevel < 10000) {
-            list.style.visibility = "visible";
-            fuelStatus.innerHTML = "Fuel level too low for launch";
-            launchStatus.innerHTML = "Shuttle not ready for launch";
-            launchStatus.style.color = "red";
-        } else if (cargoLevel > 10000) {
-            list.style.visibility = "visible";
-            cargoStatus.innerHTML = "Cargo mass too high for launch";
-            launchStatus.innerHTML = "Shuttle not ready for launch";
-            launchStatus.style.color = "red";
-        } else {
-            launchStatus.innerHTML = "Shuttle is ready for launch";
-            launchStatus.style.color = "green";
-        }
+    copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
+    if (pilot === "" || copilot === "" || fuelLevel === "" || cargoLevel === "") {
+        alert("All fields are required!");
+    } else if (validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number") {
+        alert("Make sure to enter valid information for each field!");
     } else {
-        alert("Fuel level and cargo mass must be valid numbers.");
+        list.style.visibility = "visible";
+        if (fuelLevel < 10000) {
+            fuelStatus.innerHTML = "Fuel level too low for launch";
+            launchStatus.innerHTML = "Shuttle Not Ready for Launch";
+            launchStatus.style.color = "red";
+
+        } else if (cargoLevel > 10000) {
+            cargoStatus.innerHTML = "Cargo mass too heavy for launch";
+            launchStatus.innerHTML = "Shuttle Not Ready for Launch";
+            launchStatus.style.color = "red";
+
+        } else {
+            fuelStatus.innerHTML = "Fuel level high enough for launch";
+            cargoStatus.innerHTML = "Cargo mass low enough for launch";
+            launchStatus.innerHTML = "Shuttle is Ready for Launch";
+            launchStatus.style.color = "green";
+
+        }
     }
 
 }
@@ -67,14 +73,6 @@ async function myFetch() {
     });
     return planetsReturned;
 }
-
-let listedPlanets;
-// Set listedPlanetsResponse equal to the value returned by calling myFetch()
-let listedPlanetsResponse = myFetch();
-listedPlanetsResponse.then(function (result) {
-    listedPlanets = result;
-    console.log(listedPlanets);
-});
 
 function pickPlanet(planets) {
     let planetsLength = planets.length;
