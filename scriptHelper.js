@@ -4,6 +4,7 @@ require('cross-fetch/polyfill');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
     // Here is the HTML formatting for our mission target div.
+    // Access the missionTarget div in the HTML and update its content
     const missionTarget = document.getElementById("missionTarget");
     missionTarget.innerHTML = `
                  <h2>Mission Destination</h2>
@@ -18,6 +19,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
     `;
 }
 
+// Function to validate input and return a descriptive string
 function validateInput(testInput) {
     if (testInput === "") {
         return "Empty";
@@ -28,21 +30,28 @@ function validateInput(testInput) {
     }
 }
 
+// Function to handle form submission and update status information
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
+    // Access HTML elements to update with status information
     const pilotStatus = document.getElementById("pilotStatus");
     const copilotStatus = document.getElementById("copilotStatus");
     const fuelStatus = document.getElementById("fuelStatus");
     const cargoStatus = document.getElementById("cargoStatus");
     const launchStatus = document.getElementById("launchStatus");
 
+    // Display pilot and copilot status
     pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
     copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
+
+    // Check if any input fields are empty
     if (pilot === "" || copilot === "" || fuelLevel === "" || cargoLevel === "") {
         alert("All fields are required!");
     } else if (validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number") {
         alert("Make sure to enter valid information for each field!");
     } else {
         list.style.visibility = "visible";
+
+        // Check fuel level and cargo mass
         if (fuelLevel < 10000) {
             fuelStatus.innerHTML = "Fuel level too low for launch";
             launchStatus.innerHTML = "Shuttle Not Ready for Launch";
@@ -81,16 +90,16 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
 }
 
-
+// Function to fetch a list of planets from a remote API
 async function myFetch() {
     let planetsReturned;
     planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then(function (response) {
         return response.json();
-
     });
     return planetsReturned;
 }
 
+// Function to randomly pick a planet from the provided list
 function pickPlanet(planets) {
     let planetsLength = planets.length;
     let pickedPlanet = Math.floor(Math.random() * planetsLength);
