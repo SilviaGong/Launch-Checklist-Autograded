@@ -4,7 +4,6 @@
 // Execute the code when the window has finished loading
 window.addEventListener("load", function () {
 
-
     let listedPlanets;
     // Set listedPlanetsResponse equal to the value returned by calling myFetch()
     // Handle the asynchronous response from myFetch

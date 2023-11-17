@@ -30,7 +30,7 @@ function validateInput(testInput) {
     }
 }
 
-// Function to handle form submission and update status information
+// Function to handle/deal with form submission and update status information
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     // Access HTML elements to update with status information
     const pilotStatus = document.getElementById("pilotStatus");
@@ -46,7 +46,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     // Check if any input fields are empty
     if (pilot === "" || copilot === "" || fuelLevel === "" || cargoLevel === "") {
         alert("All fields are required!");
-    } else if (validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number") {
+    } else if (validateInput(pilot) === "Is a Number" || validateInput(copilot) === "Is a Number" || validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number") {
         alert("Make sure to enter valid information for each field!");
     } else {
         list.style.visibility = "visible";
